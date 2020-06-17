@@ -2,10 +2,11 @@
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
+from GUI import OurGUI
 
 
-def readData():
-    df = pd.read_excel("C:\\Users\\Chen\\Desktop\\Dataset.xlsx")
+def readData(path):
+    df = pd.read_excel(path)
     return df
 
 # df = df.to_csv("C:\\Users\\Chen\\Desktop\\Dataset.csv", index=None ,header=True)
@@ -36,6 +37,13 @@ def groupByCountry(df):
     df=df.groupby('country').mean()
     return df
 
+
+
+def preProcess(path):
+    df=readData(path)
+    df=fillMissingValues(df)
+    df=Standardization(df)
+    df=groupByCountry(df)
 
 
 
