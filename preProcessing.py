@@ -1,8 +1,7 @@
 
 import pandas as pd
 import numpy as np
-from sklearn import preprocessing
-from GUI import OurGUI
+
 
 
 def readData(path):
@@ -44,6 +43,9 @@ def preProcess(path):
     df=fillMissingValues(df)
     df=Standardization(df)
     df=groupByCountry(df)
+    return df
+
+
 
 
 

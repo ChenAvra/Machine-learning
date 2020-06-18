@@ -1,6 +1,7 @@
 import preProcessing
+# import model
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from tkinter.filedialog import askopenfilename, Label, Button, Entry, IntVar, END, W, E
 
 
@@ -12,6 +13,7 @@ class OurGUI:
         master.minsize(800,400)
 
         self.filename="C:\\Users\\Chen\\Desktop\\Dataset.xlsx"
+        self.df=None
 
         self.e1 = Entry(self.master, width=40)
         self.e1.grid(row=1, column=1)
@@ -30,10 +32,10 @@ class OurGUI:
         e3 = Entry(master, width=40)
         e3.grid(row=3, column=1)
         # lambda: bot_analysis_frame(eventConditionL, eventBreakL)
-        master.button = Button(master, text='Pre-process', width=25, command=lambda: preProcessing.preProcess(self.filename))
+        master.button = Button(master, text='Pre-process', width=25, command=lambda: self.preProc(self.filename))
         master.button.grid(column=1, row=4)
 
-        master.button = Button(master, text='Cluster', width=25, command=lambda: preProcessing.preProcess(self.filename))
+        master.button = Button(master, text='Cluster', width=25)
         master.button.grid(column=3, row=4)
 
 
@@ -41,6 +43,13 @@ class OurGUI:
 
         self.filename=filedialog.askopenfilename(initialdir="/",title="Browse a file",filetype=(("xlsx","*jpg"),(" ALL FILES","*.*")))
         self.e1.insert(0, self.filename)
+
+    def preProc(self,filename):
+        self.df=preProcessing.preProcess(self.filename)
+        messagebox.showinfo("message","Preprocessing completed successfully!")
+        print(self.df)
+
+
 
 
 
