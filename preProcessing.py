@@ -4,7 +4,6 @@ import numpy as np
 from sklearn import preprocessing
 from GUI import OurGUI
 
-
 def readData(path):
     df = pd.read_excel(path)
     return df
@@ -44,6 +43,7 @@ def preProcess(path):
     df=fillMissingValues(df)
     df=Standardization(df)
     df=groupByCountry(df)
+    return df
 
 
 
