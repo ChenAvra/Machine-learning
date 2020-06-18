@@ -1,8 +1,8 @@
 
 import pandas as pd
 import numpy as np
-from sklearn import preprocessing
-from GUI import OurGUI
+
+
 
 def readData(path):
     df = pd.read_excel(path)
