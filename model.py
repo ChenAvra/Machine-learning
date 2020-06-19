@@ -6,14 +6,14 @@ from sklearn.preprocessing import LabelEncoder
 from preProcessing import preProcess
 from matplotlib import pyplot as plt
 import preProcessing
-import plotly.plotly as py
+import chart_studio.plotly as py
 import plotly.express as px
 
 def runModel(df,n_clusters, n_init):
     # df = convertCategorialVariables(df)
     df = KMeansFunc(df,n_clusters, n_init)
     df = scatterGraph(df)
-    df=makeHoroplethMap(df)
+    # df=makeHoroplethMap(df)
     print (df)
     return 0
 
@@ -59,5 +59,5 @@ def makeHoroplethMap(df):
     # py.sign_in(USER_NAME, API)
     # py.image.save_as(choromap, filename='name.png')
 
-df = preProcessing.preProcess("C:\\Users\\iris dreizenshtok\\Desktop\\Dataset.xlsx")
-runModel(df,3,2)
+# df = preProcessing.preProcess("C:\\Users\\iris dreizenshtok\\Desktop\\Dataset.xlsx")
+# runModel(df,3,2)
