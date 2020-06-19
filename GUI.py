@@ -12,7 +12,7 @@ class OurGUI:
         master.title("countries")
         master.minsize(800,400)
 
-        self.filename="C:\\Users\\Chen\\Desktop\\Dataset.xlsx"
+        self.filename=None
         self.df=None
 
         self.e1 = Entry(self.master, width=40)
@@ -25,12 +25,13 @@ class OurGUI:
 
 
         Label(master, text='Number of clusters k').grid(row=2)
-        e2 = Entry(master,width=40)
-        e2.grid(row=2, column=1)
+        self.e2 = Entry(master,width=40)
+        self.e2.grid(row=2, column=1)
+
 
         Label(master, text='Number of runs').grid(row=3)
-        e3 = Entry(master, width=40)
-        e3.grid(row=3, column=1)
+        self.e3 = Entry(master, width=40)
+        self.e3.grid(row=3, column=1)
         # lambda: bot_analysis_frame(eventConditionL, eventBreakL)
         master.button = Button(master, text='Pre-process', width=25, command=lambda: self.preProc(self.filename))
         master.button.grid(column=1, row=4)
@@ -45,11 +46,19 @@ class OurGUI:
         self.e1.insert(0, self.filename)
 
     def preProc(self,filename):
-        self.df=preProcessing.preProcess(self.filename)
-        messagebox.showinfo("message","Preprocessing completed successfully!")
-        print(self.df)
+        if self.filename is None :
+            messagebox.showinfo("error","You should enter a valid file name before pre processing")
+        else:
+            self.df=preProcessing.preProcess(self.filename)
+            if self.df is not None:
+                messagebox.showinfo("message","Preprocessing completed successfully!")
+                print(self.df)
 
-
+    def model(self):
+        if self.e2.get() > self.df.shape[0]:
+            messagebox.showinfo("Ivalid number of clusters", "please enter a valid number of clusters")
+        if self.e3.get() > 50:
+            messagebox.showinfo("Ivalid number of runs", "please enter a valid number of runs")
 
 
 

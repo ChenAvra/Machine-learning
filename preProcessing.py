@@ -1,3 +1,4 @@
+from tkinter import messagebox
 
 import pandas as pd
 import numpy as np
@@ -5,8 +6,11 @@ import numpy as np
 
 
 def readData(path):
-    df = pd.read_excel(path)
-    return df
+    try:
+        df = pd.read_excel(path)
+        return df
+    except:
+        messagebox.showinfo("error","Invalid path, pleae enter a new path")
 
 # df = df.to_csv("C:\\Users\\Chen\\Desktop\\Dataset.csv", index=None ,header=True)
 
@@ -40,10 +44,11 @@ def groupByCountry(df):
 
 def preProcess(path):
     df=readData(path)
-    df=fillMissingValues(df)
-    df=Standardization(df)
-    df=groupByCountry(df)
-    return df
+    if df is not None:
+        df = fillMissingValues(df)
+        df=Standardization(df)
+        df=groupByCountry(df)
+        return df
 
 
 
