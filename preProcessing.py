@@ -37,7 +37,7 @@ def Standardization(df):
 
 #group by and mean
 def groupByCountry(df):
-    df=df.groupby('country').mean()
+    df=df.groupby(['country'], as_index=False).mean()
     return df
 
 
