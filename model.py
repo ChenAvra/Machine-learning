@@ -21,12 +21,12 @@ def runModel(df,n_clusters, n_init):
     print (df)
     return 0
 
-def convertCategorialVariables(df):
-    var_mod = list(df.columns.values)
-    le = LabelEncoder()
-    for i in var_mod:
-      df[i] = le.fit_transform(df[i])
-    return df;
+# def convertCategorialVariables(df):
+#     var_mod = list(df.columns.values)
+#     le = LabelEncoder()
+#     for i in var_mod:
+#       df[i] = le.fit_transform(df[i])
+#     return df;
 
 def KMeansFunc(df,n_clusters,n_init):
     clustring = KMeans(n_clusters=n_clusters,n_init=n_init)
@@ -37,6 +37,9 @@ def KMeansFunc(df,n_clusters,n_init):
 
 
 def scatterGraph(df):
+    API='Vn3DdeYNzJ9f44m9ykeb'
+    USER_NAME='irisdrei'
+
     Generosity = df['Generosity']
     social_support = df['Social support']
     clustering = df['Clustering']
@@ -48,8 +51,8 @@ def scatterGraph(df):
     plt.ylabel('social_support')
 
     plt.tight_layout()
-
-    plt.show()
+    plt.savefig('Generosity_social_support')
+    # plt.show()
     return df
 
 def makeHoroplethMap(df):
