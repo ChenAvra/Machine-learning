@@ -1,16 +1,20 @@
+# from image.templatetags import img
+from PIL import ImageTk , Image
+import PIL.Image
+
 import preProcessing
 import model
 from tkinter import *
 from tkinter import filedialog, messagebox
 from tkinter.filedialog import askopenfilename, Label, Button, Entry, IntVar, END, W, E
+# from PIL import ImageTk,Image
 
 
 class OurGUI:
-
     def __init__(self, master):
         self.master = master
         master.title("countries")
-        master.minsize(800, 400)
+        master.minsize(1200, 600)
 
         self.filename = None
         self.df = None
@@ -45,19 +49,59 @@ class OurGUI:
 
     def preProc(self):
         if self.filename is None:
-            messagebox.showinfo("error", "You should enter a valid file name before pre processing")
+            messagebox.showerror("error", "You should enter a valid path file name before pre processing")
         else:
-            self.df = preProcessing.preProcess(self.filename)
-            if self.df is not None:
-                messagebox.showinfo("message", "Preprocessing completed successfully!")
-                print(self.df)
-                print(self.e2.get())
+            try:
+                self.df = preProcessing.preProcess(self.filename)
+
+                if self.df is not None:
+                    messagebox.showinfo("message", "Preprocessing completed successfully!")
+                    print(self.df)
+            except:
+                messagebox.showerror("Error", "error while  the pre processing")
+
+
 
     def model(self):
-        if int(self.e2.get()) > self.df.shape[0]:
-            messagebox.showinfo("Ivalid number of clusters", "please enter a valid number of clusters")
-        elif self.e3.get() > 50:
-            messagebox.showinfo("Ivalid number of runs", "please enter a valid number of runs")
-        else:
-            model.runModel(self.df, self.e2, self.e3)
-            print()
+        try:
+            if (int(self.e2.get())) > self.df.shape[0] or (int(self.e2.get()))<3 :
+                messagebox.showerror("Ivalid number of clusters", "please enter a valid number of clusters")
+
+            else:
+                try:
+                    if (int(self.e3.get())) > 50 or (int(self.e3.get())) < 1:
+                        messagebox.showerror("Ivalid number of runs", "please enter a valid number of runs")
+                    else:
+                        try:
+                            model.runModel(self.df, int(self.e2.get()), int(self.e3.get()))
+                            self.img = ImageTk.PhotoImage(PIL.Image.open("countries.png"))
+                            self.panel = Label(self.master, image=self.img)
+                            self.panel.grid(row=5, column=1)
+
+                            # canvas = Canvas(self.master, width=300, height=300)
+                            # canvas.pack()
+                            # img = PhotoImage(file="countries.png")
+                            # canvas.create_image(20, 20, anchor=NW, image=img)
+
+
+
+
+
+
+
+
+                        except:
+                            messagebox.showerror("Error", "error while the model")
+
+                except:
+
+                    messagebox.showerror("Ivalid number of runs", "please enter a valid number of runs")
+
+
+
+
+        except:
+            messagebox.showerror("Ivalid input of clusters", "please enter a valid number of clusters")
+
+
+

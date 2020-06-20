@@ -12,6 +12,9 @@ import plotly.graph_objects as go
 
 def runModel(df,n_clusters, n_init):
     # df = convertCategorialVariables(df)
+    print(n_clusters)
+    print(n_init)
+    print(df)
     df = KMeansFunc(df,n_clusters, n_init)
     df = scatterGraph(df)
     df=makeHoroplethMap(df)
@@ -71,5 +74,5 @@ def makeHoroplethMap(df):
     # py.sign_in(USER_NAME, API)
     # py.image.save_as(choromap, filename='name.png')
 
-# df = preProcessing.preProcess("C:\\Users\\iris dreizenshtok\\Desktop\\Dataset.xlsx")
+# df = preProcessing.preProcess("C:\\Users\\Chen\\Desktop\\Dataset.xlsx")
 # runModel(df,3,2)
