@@ -1,12 +1,15 @@
 # from image.templatetags import img
-from PIL import ImageTk , Image
+from PIL import ImageTk, Image
 import PIL.Image
+from resizeimage import resizeimage
 
 import preProcessing
 import model
 from tkinter import *
 from tkinter import filedialog, messagebox
 from tkinter.filedialog import askopenfilename, Label, Button, Entry, IntVar, END, W, E
+
+
 # from PIL import ImageTk,Image
 
 
@@ -24,7 +27,7 @@ class OurGUI:
 
         master.lableFrame = LabelFrame(master, text="Open a file")
         master.lableFrame.grid(column=0, row=1, padx=20, pady=20)
-        master.button = Button(master.lableFrame, text="Browse A File", command=self.fileDialog)
+        master.button = Button(master.lableFrame, text="Browse", command=self.fileDialog)
         master.button.grid(column=1, row=1)
 
         Label(master, text='Number of clusters k').grid(row=2)
@@ -38,8 +41,8 @@ class OurGUI:
         master.button = Button(master, text='Pre-process', width=25, command=lambda: self.preProc())
         master.button.grid(column=1, row=4)
 
-        master.button = Button(master, text='Cluster', width=25, command=lambda: self.model())
-        master.button.grid(column=3, row=4)
+        master.button1 = Button(master, text='Cluster', state=DISABLED, width=25, command=lambda: self.model())
+        master.button1.grid(column=3, row=4)
 
     def fileDialog(self):
 
@@ -56,15 +59,15 @@ class OurGUI:
 
                 if self.df is not None:
                     messagebox.showinfo("message", "Preprocessing completed successfully!")
+                    self.master.button1.config(state='active')
+
                     print(self.df)
             except:
                 messagebox.showerror("Error", "error while  the pre processing")
 
-
-
     def model(self):
         try:
-            if (int(self.e2.get())) > self.df.shape[0] or (int(self.e2.get()))<3 :
+            if (int(self.e2.get())) > self.df.shape[0] or (int(self.e2.get())) < 3:
                 messagebox.showerror("Ivalid number of clusters", "please enter a valid number of clusters")
 
             else:
@@ -73,15 +76,20 @@ class OurGUI:
                         messagebox.showerror("Ivalid number of runs", "please enter a valid number of runs")
                     else:
                         try:
+                            # self.master.button1['state'] = 'normal'
+
                             model.runModel(self.df, int(self.e2.get()), int(self.e3.get()))
                             self.img = ImageTk.PhotoImage(PIL.Image.open("countries.png"))
-                            self.panel = Label(self.master, image=self.img)
-                            self.panel.grid(row=5, column=1)
 
-                            # canvas = Canvas(self.master, width=300, height=300)
-                            # canvas.pack()
-                            # img = PhotoImage(file="countries.png")
-                            # canvas.create_image(20, 20, anchor=NW, image=img)
+                            self.panel = Label(self.master, image=self.img)
+                            self.panel.grid(row=8, column=0)
+
+                            self.img1 = ImageTk.PhotoImage(PIL.Image.open("Generosity_social_support.png"))
+                            self.panel = Label(self.master, image=self.img1)
+                            self.panel.grid(row=8, column=1)
+
+                            messagebox.showinfo("message", "clustring completed successfully!")
+
 
 
 
@@ -102,6 +110,3 @@ class OurGUI:
 
         except:
             messagebox.showerror("Ivalid input of clusters", "please enter a valid number of clusters")
-
-
-
