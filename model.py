@@ -10,6 +10,9 @@ import chart_studio.plotly.plotly as py
 import plotly.express as px
 import plotly.graph_objects as go
 
+
+#the main function that runs the model
+
 def runModel(df,n_clusters, n_init):
     # df = convertCategorialVariables(df)
     print(n_clusters)
@@ -28,6 +31,8 @@ def runModel(df,n_clusters, n_init):
 #       df[i] = le.fit_transform(df[i])
 #     return df;
 
+
+# create k meand model
 def KMeansFunc(df,n_clusters,n_init):
     clustring = KMeans(n_clusters=n_clusters,n_init=n_init)
     a=clustring.fit(df.loc[:,df.columns !='country'])
@@ -36,6 +41,7 @@ def KMeansFunc(df,n_clusters,n_init):
     return df
 
 
+#paint the clustring graph
 def scatterGraph(df):
     API='Vn3DdeYNzJ9f44m9ykeb'
     USER_NAME='irisdrei'
@@ -55,6 +61,8 @@ def scatterGraph(df):
     # plt.show()
     return df
 
+
+#paint the countries map
 def makeHoroplethMap(df):
     API='Vn3DdeYNzJ9f44m9ykeb'
     USER_NAME='irisdrei'
